@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vlabs-integrity"
+version = "0.1.0"
+description = "Judge-free, deterministic, $0 gameability audit for RL/RFT coding rewards and verifiers."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+authors = [{ name = "Verifiable Labs" }]
+keywords = ["reward-hacking", "rlvr", "rft", "verifiers", "prime-intellect", "isomorphic-perturbation-testing"]
+dependencies = []
+
+[project.urls]
+Homepage = "https://verifiable-labs.com"
+Repository = "https://github.com/verifiablelabs/vlabs-integrity"
+
+[project.optional-dependencies]
+verifiers = ["verifiers"]
+
+[project.scripts]
+vlabs-integrity = "vlabs_integrity.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vlabs_integrity"]
