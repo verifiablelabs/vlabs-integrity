@@ -26,9 +26,11 @@ def _demo() -> int:
         provided_inputs=[([1, 2, 3],)],  # one all-positive test -> misses the >/>= boundary
         input_generator=gen,
     )
-    print("vlabs-integrity — gameability audit (judge-free · 0 model calls · $0)\n")
+    print("vlabs-integrity — gameability audit (judge-free · 0 model calls)\n")
     print(json.dumps(report.to_dict(), indent=2))
-    if report.exploitable_gap > 0:
+    if not report.auditable:
+        headline = "INCONCLUSIVE (no mutants generated; fail-closed integrity score is 0)"
+    elif report.exploitable_gap > 0:
         headline = (
             f"the provided reward MISSES {report.exploitable_gap:.0%} of the exploitable surface "
             f"the isomorphic re-grade catches"

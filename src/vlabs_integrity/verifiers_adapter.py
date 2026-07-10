@@ -10,6 +10,7 @@ The `verifiers` import is LAZY and OPTIONAL: this module works standalone, and o
 """
 from __future__ import annotations
 
+import math
 from collections.abc import Callable, Sequence
 
 from . import audit_reward
@@ -30,8 +31,19 @@ def integrity_reward_fn(
     lower when it leaves an exploitable surface. Use it as an auxiliary rubric signal / gate, not
     as the task reward itself.
     """
+    if (
+        isinstance(penalize_gap, bool)
+        or not isinstance(penalize_gap, (int, float))
+        or not math.isfinite(penalize_gap)
+        or penalize_gap < 0.0
+    ):
+        raise ValueError("penalize_gap must be a finite non-negative number")
     report = audit_reward(reference_source, entry_point, provided_inputs, input_generator)
-    score = max(0.0, 1.0 - penalize_gap * report.exploitable_gap)
+    score = (
+        0.0
+        if not report.auditable or report.gameable
+        else max(0.0, min(1.0, 1.0 - penalize_gap * report.exploitable_gap))
+    )
 
     def _reward(*_args, **_kwargs) -> float:  # verifiers passes (prompt, completion, answer, ...)
         return score
