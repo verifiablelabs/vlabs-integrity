@@ -1,11 +1,11 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling==1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
 name = "vlabs-integrity"
 version = "0.1.0"
-description = "Judge-free, deterministic, $0 gameability audit for RL/RFT coding rewards and verifiers."
+description = "Judge-free, deterministic, 0-model-call gameability audit for RL/RFT coding rewards and verifiers."
 readme = "README.md"
 requires-python = ">=3.9"
 license = "Apache-2.0"
