@@ -32,8 +32,8 @@ jobs:
           enable-cache: false
       - name: Install the Python-3.9-compatible locked CI surface
         run: |
-          uv pip install --python python --require-hashes -r .github/${{ matrix.lockfile }}
-          uv pip install --python python --no-deps --no-build-isolation -e .
+          uv pip install --system --python python --require-hashes -r .github/${{ matrix.lockfile }}
+          uv pip install --system --python python --no-deps --no-build-isolation -e .
       - run: python -m ruff check src tests
       - run: python -m compileall -q src
       - run: python -m vlabs_integrity.cli demo
